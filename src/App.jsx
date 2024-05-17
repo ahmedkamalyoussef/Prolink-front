@@ -1,14 +1,14 @@
 import React from 'react'
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Profile from './Pages/Profile/Profile';
-import Post from './Components/Post/Post';
-import Home from './Pages/Home';
-
-
+import { RouterProvider } from 'react-router-dom';
+import routers from './Components/Routing/Routing';
+import './App.css'
+// import Signin_SignupPage from './Pages/Signin_Signup/Signin_SignupPage'
+// import Home from './Pages/Home'
 function App() {
   return (
-      <Profile/>
+      // <Signin_SignupPage/>
+      <RouterProvider router={routers}/>
   );
 }
 

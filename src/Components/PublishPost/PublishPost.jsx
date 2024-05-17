@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 import { FaImage } from 'react-icons/fa';
+import { addPost } from '../../Api/Post';
 
 function PublishPost({ onPublish }) {
   const [newPostTitle, setNewPostTitle] = useState('');
@@ -19,28 +20,25 @@ function PublishPost({ onPublish }) {
     setNewPostImage(event.target.files[0]);
   };
 
-  const handleNewPostSubmit = (event) => {
+  const handleNewPostSubmit = async (event) => {
     event.preventDefault();
-    if (newPostText.trim() || newPostImage) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onPublish({
-          title: newPostTitle,
-          text: newPostText,
-          image: reader.result
-        });
-        resetForm();
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      alert('You must be logged in to post.');
+      return;
+    }
+
+    try {
+      const postData = {
+        title: newPostTitle,
+        text: newPostText,
+        image: newPostImage
       };
-      if (newPostImage) {
-        reader.readAsDataURL(newPostImage);
-      } else {
-        onPublish({
-          title: newPostTitle,
-          text: newPostText,
-          image: null
-        });
-        resetForm();
-      }
+      const response = await addPost(postData, token);
+      onPublish(response);
+      resetForm();
+    } catch (error) {
+      alert(`Failed to post: ${error.response?.data?.message || error.message}`);
     }
   };
 

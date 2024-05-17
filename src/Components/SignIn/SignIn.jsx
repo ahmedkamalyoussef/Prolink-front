@@ -1,63 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
+// import { useNavigate } from 'react-router-dom';
+import { login } from "../../Api/LoginAndRegister";
+import '../../Pages/Signin_Signup/Signin_SignupPage.css';
+
 function SignInForm() {
-  const [state, setState] = React.useState({
+  const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
-  const handleChange = evt => {
-    const value = evt.target.value;
-    setState({
-      ...state,
-      [evt.target.name]: value
+
+  //  const navigate = useNavigate(); 
+
+  const handleChange = (evt) => {
+    setFormData({
+      ...formData,
+      [evt.target.name]: evt.target.value,
     });
   };
 
-  const handleOnSubmit = evt => {
+  const handleOnSubmit = async (evt) => {
     evt.preventDefault();
-
-    const { email, password } = state;
-    alert(`You are login with email: ${email} and password: ${password}`);
-
-    for (const key in state) {
-      setState({
-        ...state,
-        [key]: ""
+    console.log("Form data submitted:", formData);
+    try {
+      const response = await login(formData);
+      console.log("Response from server:", response);
+      localStorage.setItem('authToken', response.data.token); 
+      // navigate('/home');
+      setFormData({
+        email: "",
+        password: ""
       });
+    } catch (error) {
+      console.log("Error response:", error);
+      alert(`Login failed: ${error.response?.data?.message}`);
     }
   };
 
   return (
     <div className="form-container sign-in-container">
       <form onSubmit={handleOnSubmit}>
-        <h1>Sign in</h1>
-        {/* <div className="social-container">
-          <a href="#" className="social">
-            <i className="fab fa-facebook-f" />
-          </a>
-          <a href="#" className="social">
-            <i className="fab fa-google-plus-g" />
-          </a>
-          <a href="#" className="social">
-            <i className="fab fa-linkedin-in" />
-          </a>
-        </div>
-        <span>or use your account</span> */}
+        <h4 style={{ color: "#1691ce" }}>Sign in</h4>
         <input
+          className="signInput"
           type="email"
           placeholder="Email"
           name="email"
-          value={state.email}
+          value={formData.email}
           onChange={handleChange}
         />
         <input
+          className="signInput"
           type="password"
           name="password"
           placeholder="Password"
-          value={state.password}
+          value={formData.password}
           onChange={handleChange}
         />
         <a href="#">Forgot your password?</a>
-        <button className="signBtn">Sign In</button>
+        <button className="signBtn" type="submit">Sign In</button>
       </form>
     </div>
   );

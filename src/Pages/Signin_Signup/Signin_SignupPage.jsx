@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
-import SignInForm from "../Components/SignIn/SignIn";
-import SignUpForm from "../Components/SignUp/SignUp";
+import SignInForm from "../../Components/SignIn/SignIn";
+import SignUpForm from "../../Components/SignUp/SignUp";
 import './Signin_SignupPage.css'
 
 function Signin_SignupPage() {
@@ -16,7 +16,7 @@ function Signin_SignupPage() {
       "container " + (type === "signUp" ? "right-panel-active" : "");
     return (
       <div className="App">
-        <h2>Welcome to Proliink</h2>
+        <h2 style={{color:"#1691ce"}}>Welcome to Proliink</h2>
         <div className={containerClass} id="container">
           <SignUpForm />
           <SignInForm />

@@ -3,12 +3,11 @@
     text-align: center;
   }
   
-  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
   
   * {
     box-sizing: border-box;
   }
-  
+   
   body {
     background: #f6f5f7;
     display: flex;
@@ -85,10 +84,11 @@
     text-align: center;
   }
   
-  input {
+  .signInput {
     background-color: #eee;
     border: none;
-    padding: 12px 15px;
+    border-radius: 20px;
+    padding: 6px 15px;
     margin: 8px 0;
     width: 100%;
   }

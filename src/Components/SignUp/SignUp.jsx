@@ -1,72 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
+import { register } from "../../Api/LoginAndRegister";
+import "../../Pages/Signin_Signup/Signin_SignupPage.css";
+
 function SignUpForm() {
-  const [state, setState] = React.useState({
-    name: "",
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: "",
   });
-  const handleChange = evt => {
-    const value = evt.target.value;
-    setState({
-      ...state,
-      [evt.target.name]: value
+
+  const handleChange = (evt) => {
+    setFormData({
+      ...formData,
+      [evt.target.name]: evt.target.value,
     });
   };
 
-  const handleOnSubmit = evt => {
+  const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
-    const { name, email, password } = state;
-    alert(
-      `You are sign up with name: ${name} email: ${email} and password: ${password}`
-    );
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-    for (const key in state) {
-      setState({
-        ...state,
-        [key]: ""
+    try {
+      const response = await register({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        password: formData.password,
       });
+
+      console.log("Registration response:", response.data);
+      alert(`Registration successful: ${response.data.message}`);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      console.log("Registration error:", error.response);
+      alert(`Registration failed: ${error.response}`);
     }
   };
 
   return (
     <div className="form-container sign-up-container">
       <form onSubmit={handleOnSubmit}>
-        <h1>Create Account</h1>
-        {/* <div className="social-container">
-          <a href="#" className="social">
-            <i className="fab fa-facebook-f" />
-          </a>
-          <a href="#" className="social">
-            <i className="fab fa-google-plus-g" />
-          </a>
-          <a href="#" className="social">
-            <i className="fab fa-linkedin-in" />
-          </a>
-        </div>
-        <span>or use your email for registration</span> */}
+        <h4 style={{ color: "#1691ce" }}>Create Account</h4>
         <input
+          className="signInput"
           type="text"
-          name="name"
-          value={state.name}
+          name="firstName"
+          value={formData.firstName}
           onChange={handleChange}
-          placeholder="Name"
+          placeholder="First Name"
         />
         <input
+          className="signInput"
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          placeholder="Last Name"
+        />
+        <input
+          className="signInput"
+          type="text"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          placeholder="Phone Number"
+        />
+        <input
+          className="signInput"
           type="email"
           name="email"
-          value={state.email}
+          value={formData.email}
           onChange={handleChange}
           placeholder="Email"
         />
         <input
+          className="signInput"
           type="password"
           name="password"
-          value={state.password}
+          value={formData.password}
           onChange={handleChange}
           placeholder="Password"
         />
-        <button className="signBtn">Sign Up</button>
+        <input
+          className="signInput"
+          type="password"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          placeholder="Confirm Password"
+        />
+        <button className="signBtn" type="submit">Sign Up</button>
       </form>
     </div>
   );

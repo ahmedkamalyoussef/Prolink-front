@@ -10,7 +10,7 @@ import {
   InputGroup,
   FormControl,
   OverlayTrigger,
-  Tooltip,
+  Tooltip, 
 } from "react-bootstrap";
 import {
   FaRegThumbsUp,
@@ -108,6 +108,7 @@ function Post({ post }) {
                     overlay={<Tooltip>Options</Tooltip>}
                   >
                     <Button
+                    className="postBtn"
                       variant="link"
                       onClick={() => setShowOptions(!showOptions)}
                     >
@@ -116,10 +117,10 @@ function Post({ post }) {
                   </OverlayTrigger>
                   {showOptions && (
                     <div className="options">
-                      <Button variant="link">
+                      <Button variant="link" className="postBtn">
                         <FaEdit />
                       </Button>
-                      <Button variant="link">
+                      <Button variant="link" className="postBtn">
                         <FaTrash />
                       </Button>
                     </div>
@@ -141,7 +142,7 @@ function Post({ post }) {
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <Button variant="primary">Apply for Job</Button>
+                <Button variant="primary" className="postBtn">Apply for Job</Button>
                 <div className="d-flex align-items-center">
                   <OverlayTrigger
                     placement="top"
@@ -153,14 +154,14 @@ function Post({ post }) {
                   >
                     <Button
                       variant={isLiked ? "primary" : "outline-secondary"}
-                      className="me-2"
+                      className="me-2 postBtn"
                       onClick={handleLike}
                     >
                       <FaRegThumbsUp className="me-1" />
                       {likes.length}
                     </Button>
                   </OverlayTrigger>
-                  <Button
+                  <Button className="postBtn"
                     variant="primary"
                     onClick={() => setCommentInputVisible(!commentInputVisible)}
                     style={{ cursor: "pointer" }} 
@@ -192,7 +193,7 @@ function Post({ post }) {
                       />
                     </InputGroup.Text>
                   </InputGroup>
-                  <Button variant="primary" type="submit">
+                  <Button className="postBtn" variant="primary" type="submit">
                     Post Comment
                   </Button>
                 </Form>
@@ -227,7 +228,7 @@ function Post({ post }) {
                   <Button
                     variant="link"
                     onClick={handleShowAllComments}
-                    className="p-0"
+                    className="postBtn p-0"
                   >
                     {showAllComments
                       ? "Show less comments"
