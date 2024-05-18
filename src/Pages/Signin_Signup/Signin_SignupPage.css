@@ -1,14 +1,14 @@
-.App {
+.SignCon {
     font-family: sans-serif;
     text-align: center;
   }
   
   
-  * {
+  .SignCon {
     box-sizing: border-box;
   }
    
-  body {
+  .SignCon {
     background: #f6f5f7;
     display: flex;
     justify-content: center;
@@ -19,16 +19,15 @@
     margin: -20px 0 50px;
   }
   
-  h1 {
+  .signH1 {
     font-weight: bold;
     margin: 0;
   }
-  
-  h2 {
+  .signH2 {
     text-align: center;
   }
   
-  p {
+  .signP {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -36,11 +35,11 @@
     margin: 20px 0 30px;
   }
   
-  span {
+  /* .signS {
     font-size: 12px;
-  }
+  } */
   
-  a {
+  .signA {
     color: #333;
     font-size: 14px;
     text-decoration: none;
@@ -73,7 +72,7 @@
     border-color: #ffffff;
   }
   
-  form {
+  .signForm {
     background-color: #ffffff;
     display: flex;
     align-items: center;
@@ -93,7 +92,7 @@
     width: 100%;
   }
   
-  .container {
+  .signContainer {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -117,7 +116,7 @@
     z-index: 2;
   }
   
-  .container.right-panel-active .sign-in-container {
+  .signContainer.right-panel-active .sign-in-container {
     transform: translateX(100%);
   }
   
@@ -128,7 +127,7 @@
     z-index: 1;
   }
   
-  .container.right-panel-active .sign-up-container {
+  .signContainer.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
@@ -160,7 +159,7 @@
     z-index: 100;
   }
   
-  .container.right-panel-active .overlay-container {
+  .signContainer.right-panel-active .overlay-container {
     transform: translateX(-100%);
   }
   
@@ -180,7 +179,7 @@
     transition: transform 0.6s ease-in-out;
   }
   
-  .container.right-panel-active .overlay {
+  .signContainer.right-panel-active .overlay {
     transform: translateX(50%);
   }
   
@@ -203,7 +202,7 @@
     transform: translateX(-20%);
   }
   
-  .container.right-panel-active .overlay-left {
+  .signContainer.right-panel-active .overlay-left {
     transform: translateX(0);
   }
   
@@ -212,7 +211,7 @@
     transform: translateX(0);
   }
   
-  .container.right-panel-active .overlay-right {
+  .signContainer.right-panel-active .overlay-right {
     transform: translateX(20%);
   }
   
@@ -231,7 +230,7 @@
     width: 40px;
   }
   
-  footer {
+  /* footer {
     background-color: #222;
     color: #fff;
     font-size: 14px;
@@ -254,5 +253,5 @@
   footer a {
     color: #3c97bf;
     text-decoration: none;
-  }
+  } */
   

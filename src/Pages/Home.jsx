@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Post from '../Components/Post/Post';
 import PublishPost from '../Components/PublishPost/PublishPost';
+import Navbar from '../Components/Navbar/Navbar';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -12,6 +13,7 @@ function Home() {
 
   return (
     <Container className="py-5">
+      <Navbar/>
       <PublishPost onPublish={handlePublishPost} />
       <div className="d-flex justify-content-center">
         <hr className="col-lg-5" />

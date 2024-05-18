@@ -38,8 +38,8 @@ function SignInForm() {
 
   return (
     <div className="form-container sign-in-container">
-      <form onSubmit={handleOnSubmit}>
-        <h4 style={{ color: "#1691ce" }}>Sign in</h4>
+      <form onSubmit={handleOnSubmit} className="signForm">
+        <h4 className='signH4' style={{ color: "#1691ce" }}>Sign in</h4>
         <input
           className="signInput"
           type="email"
@@ -56,7 +56,7 @@ function SignInForm() {
           value={formData.password}
           onChange={handleChange}
         />
-        <a href="#">Forgot your password?</a>
+        <a className='signA' href="#">Forgot your password?</a>
         <button className="signBtn" type="submit">Sign In</button>
       </form>
     </div>

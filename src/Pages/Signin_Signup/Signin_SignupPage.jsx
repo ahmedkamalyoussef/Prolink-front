@@ -13,18 +13,18 @@ function Signin_SignupPage() {
       }
     };
     const containerClass =
-      "container " + (type === "signUp" ? "right-panel-active" : "");
+      "signContainer " + (type === "signUp" ? "right-panel-active" : "");
     return (
-      <div className="App">
-        <h2 style={{color:"#1691ce"}}>Welcome to Proliink</h2>
+      <div className="SignCon">
+        <h2 className='signH2' style={{color:"#1691ce"}}>Welcome to Proliink</h2>
         <div className={containerClass} id="container">
           <SignUpForm />
           <SignInForm />
           <div className="overlay-container">
             <div className="overlay">
               <div className="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
-                <p>
+                <h1 className='signH1'>Welcome Back!</h1>
+                <p className='signP'>
                   To keep connected with us please login with your personal info
                 </p>
                 <button
@@ -36,8 +36,8 @@ function Signin_SignupPage() {
                 </button>
               </div>
               <div className="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
+                <h1 className='signH1'>Hello, Friend!</h1>
+                <p className='signP'>Enter your personal details and start journey with us</p>
                 <button
                   className="ghost signBtn"
                   id="signUp"

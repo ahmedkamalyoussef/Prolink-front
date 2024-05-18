@@ -54,8 +54,8 @@ function SignUpForm() {
 
   return (
     <div className="form-container sign-up-container">
-      <form onSubmit={handleOnSubmit}>
-        <h4 style={{ color: "#1691ce" }}>Create Account</h4>
+      <form onSubmit={handleOnSubmit} className="signForm">
+        <h4 className='signH4' style={{ color: "#1691ce" }}>Create Account</h4>
         <input
           className="signInput"
           type="text"
