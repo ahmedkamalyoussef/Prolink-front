@@ -1,10 +1,33 @@
-.gradient-custom-2 {
-    /* fallback for old browsers */
-    background: #fbc2eb;
+.profilebtn{
+  height: 36px;
+  overflow: visible;
+  color: #ffffff;
+  background-color: rgb(61, 183, 224);
+  z-index:2;
   
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(251, 194, 235, 1), rgba(166, 193, 238, 1));
-  
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(251, 194, 235, 1), rgba(166, 193, 238, 1));
-  }
+}
+.profilebtn :hover{
+  height: 32px;
+  overflow: visible;
+  color: #ffffff;
+  background-color: rgb(61, 183, 224);
+  z-index:2;
+  transform: translate(3px);
+}
+.jobTitle{
+  font-weight: bolder;
+  color: rgb(61, 183, 224);
+}
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.skill-item {
+  background-color: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,59 @@
+.job-request-card {
+    max-width: 320px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    background-color: #fff;
+    margin: 10px;
+  }
+  
+  .job-request-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .profile-name {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .job-request-content {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #666;
+  }
+  
+  .job-request-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .accept-button,
+  .deny-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .accept-button {
+    background-color: #41c0ff;
+    color: white;
+  }
+  
+  .deny-button {
+    background-color: #f44336;
+    color: white;
+  }
+  

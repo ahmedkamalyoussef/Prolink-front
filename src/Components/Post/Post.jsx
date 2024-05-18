@@ -1,35 +1,35 @@
-import React, { useState } from "react";
-import {
-  Card,
-  Button,
-  Row,
-  Col,
-  Image,
-  Container,
-  Form,
-  InputGroup,
-  FormControl,
-  OverlayTrigger,
-  Tooltip, 
-} from "react-bootstrap";
-import {
-  FaRegThumbsUp,
-  FaImage,
-  FaEllipsisV,
-  FaEdit,
-  FaTrash,
-} from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { Card, Button, Row, Col, Image, Container, Form, InputGroup, FormControl, OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
+import { FaRegThumbsUp, FaImage, FaEllipsisV, FaEdit, FaTrash } from "react-icons/fa";
+import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
+import { addComment, addLike, deleteLike, deletePost, editPost } from '../../Api/Post';
 import "./Post.css";
+import { NavLink } from 'react-router-dom';
 
 function Post({ post }) {
-  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [commentImage, setCommentImage] = useState(null);
   const [showAllComments, setShowAllComments] = useState(false);
-  const [likes, setLikes] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(post.likes);
+  const [isLiked, setIsLiked] = useState(post.isLiked);
   const [showOptions, setShowOptions] = useState(false);
-  const [commentInputVisible, setCommentInputVisible] = useState(false); // New state for controlling comment input visibility
+  const [commentInputVisible, setCommentInputVisible] = useState(false);
+  const [newPostTitle, setNewPostTitle] = useState(post.title);
+  const [newPostText, setNewPostText] = useState(post.description);
+  const [newPostImage, setNewPostImage] = useState(post.postImage);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleNewPostTitleChange = (event) => {
+    setNewPostTitle(event.target.value);
+  };
+
+  const handleNewPostChange = (event) => {
+    setNewPostText(event.target.value);
+  };
+
+  const handleNewPostImageChange = (event) => {
+    setNewPostImage(event.target.files[0]);
+  };
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -39,26 +39,30 @@ function Post({ post }) {
     setCommentImage(event.target.files[0]);
   };
 
-  const handleCommentSubmit = (event) => {
+  const handleCommentSubmit = async (event) => {
     event.preventDefault();
-    if (newComment.trim()) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setComments([
-          ...comments,
-          { name: "Anonymous", text: newComment, image: reader.result },
-        ]);
-        setNewComment("");
-        setCommentImage(null);
-      };
-      if (commentImage) {
-        reader.readAsDataURL(commentImage);
-      } else {
-        setComments([
-          ...comments,
-          { name: "Anonymous", text: newComment, image: null },
-        ]);
-        setNewComment("");
+    try {
+      await addComment(post.id, newComment);
+      setNewComment('');
+    } catch (error) {
+      alert('Error adding comment');
+    }
+  };
+
+  const handleLike = async () => {
+    if (isLiked) {
+      try {
+        await deleteLike(post.likeId);
+      } catch (error) {
+        console.log(post.likeId)
+        alert(`Error deleting like ${post.likeId}`);
+      }
+    } else {
+      try {
+        await addLike(post.id);
+      } catch (error) {
+        console.log(post.likeId)
+        alert('Error adding like');
       }
     }
   };
@@ -67,18 +71,70 @@ function Post({ post }) {
     setShowAllComments(!showAllComments);
   };
 
-  const handleLike = () => {
-    if (isLiked) {
-      setLikes(likes.filter((user) => user !== "You"));
-    } else {
-      setLikes([...likes, "You"]);
+  const handleDeletePost = async () => {
+    try {
+      await deletePost(post.id);
+    } catch (error) {
+      alert(`Error deleting post ${post.title}`);
     }
-    setIsLiked(!isLiked);
   };
 
-  const displayedComments = showAllComments ? comments : comments.slice(0, 1);
+  const handleEditPostSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const postData = {
+        title: newPostTitle,
+        Description: newPostText,
+        PostImage: newPostImage
+      };
+      const response = await editPost(post.id, postData);
+      setShowModal(false);
+    } catch (error) {
+      alert(`Failed to edit post: ${error.response?.data?.message || error.message}`);
+    }
+  };
+  
+
+  // const resetForm = () => {
+  //   setNewPostTitle('');
+  //   setNewPostText('');
+  //   setNewPostImage(null);
+  // };
+
+  useEffect(() => {
+
+  }, []);
 
   const fixedImageWidth = { width: "100%", maxWidth: "500px" };
+
+  const calculateTimeDifference = (createdAt) => {
+    const currentTime = new Date();
+    const createdTime = new Date(createdAt);
+    const difference = Math.abs(currentTime - createdTime);
+
+    const minutes = Math.floor(difference / 60000);
+    if (minutes < 60) {
+      return `${minutes}m`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+      return `${hours}h`;
+    }
+
+    const days = Math.floor(hours / 24);
+    if (days < 2) {
+      return `${days}d`;
+    }
+
+    return createdTime.toLocaleDateString();
+  };
+
+  const displayedComments = showAllComments
+    ? post.comments
+    : post.commentsCount > 0
+      ? post.comments.slice(0, 1)
+      : [];
 
   return (
     <Container className="py-2">
@@ -88,19 +144,28 @@ function Post({ post }) {
             <Card.Body>
               <div className="d-flex justify-content-between mb-3">
                 <div className="d-flex justify-content-left mb-3">
-                  <Image
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                    roundedCircle
-                    width={40}
-                    height={40}
-                    className="me-3"
-                  />
-                  <div>
-                    <h6 className="mb-0">Andy Horwitz</h6>
-                    <small className="text-muted">
-                      Web Developer at Tech Company • 1st
-                    </small>
-                  </div>
+                  <NavLink to="/profile" className="d-flex text-decoration-none text-black">
+                    <Image
+                      src={rootPath}
+                      roundedCircle
+                      width={40}
+                      height={40}
+                      className="me-3"
+                    />
+                    <div>
+                      <h6 className="mb-0">
+                        {post.user.firstName} {post.user.lastName}
+                        <small className="px-3">
+                          {calculateTimeDifference(post.dateCreated)}
+                        </small>
+                      </h6>
+
+                      <small className="text-muted">
+                        {post.user.jopTitle} •
+                        <span className='px-3'>{post.user.rate}</span>
+                      </small>
+                    </div>
+                  </NavLink>
                 </div>
                 <div>
                   <OverlayTrigger
@@ -108,7 +173,7 @@ function Post({ post }) {
                     overlay={<Tooltip>Options</Tooltip>}
                   >
                     <Button
-                    className="postBtn"
+                      className="postBtn"
                       variant="link"
                       onClick={() => setShowOptions(!showOptions)}
                     >
@@ -118,10 +183,10 @@ function Post({ post }) {
                   {showOptions && (
                     <div className="options">
                       <Button variant="link" className="postBtn">
-                        <FaEdit />
+                        <FaEdit onClick={() => setShowModal(true)} />
                       </Button>
                       <Button variant="link" className="postBtn">
-                        <FaTrash />
+                        <FaTrash onClick={handleDeletePost} />
                       </Button>
                     </div>
                   )}
@@ -130,25 +195,29 @@ function Post({ post }) {
               <div className="mb-3">
                 <div style={fixedImageWidth}>
                   <h5 style={{ color: "#3c97bf" }}>{post.title}</h5>
-                  <p>{post.text}</p>
-                  {post.image && (
+                  <p>{post.description}</p>
+                  {
                     <Image
-                      src={post.image}
+                      src={rootPath}
                       fluid
                       className="rounded"
                       style={{ width: "100%" }}
                     />
-                  )}
+                  }
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <Button variant="primary" className="postBtn">Apply for Job</Button>
+                <Button variant="primary" className="postBtn">
+                  Apply for Job
+                </Button>
                 <div className="d-flex align-items-center">
                   <OverlayTrigger
                     placement="top"
                     overlay={
                       <Tooltip>
-                        {likes.length > 0 ? likes.join(", ") : "No likes yet"}
+                        {post.likesCount > 0
+                          ? likes.join(", ")
+                          : "No likes yet"}
                       </Tooltip>
                     }
                   >
@@ -158,26 +227,26 @@ function Post({ post }) {
                       onClick={handleLike}
                     >
                       <FaRegThumbsUp className="me-1" />
-                      {likes.length}
+                      {post.likesCount}
                     </Button>
                   </OverlayTrigger>
-                  <Button className="postBtn"
+                  <Button
+                    className="postBtn"
                     variant="primary"
                     onClick={() => setCommentInputVisible(!commentInputVisible)}
-                    style={{ cursor: "pointer" }} 
+                    style={{ cursor: "pointer" }}
                   >
                     Comment
                   </Button>
                 </div>
               </div>
               <hr />
-              {/* Toggle visibility of comment input */}
 
               {commentInputVisible && (
                 <Form onSubmit={handleCommentSubmit}>
                   <h6>Comments</h6>
                   <InputGroup className="mb-3">
-                    <Form.Control
+                    <FormControl
                       type="text"
                       value={newComment}
                       onChange={handleCommentChange}
@@ -201,30 +270,41 @@ function Post({ post }) {
               <div className="mt-4">
                 {displayedComments.map((comment, index) => (
                   <div key={index} className="d-flex mb-3">
-                    <Image
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
-                      roundedCircle
-                      width={40}
-                      height={40}
-                      className="me-3"
-                    />
-                    <div>
-                      <h6 className="mb-0">{comment.name}</h6>
-                      <small className="text-muted">{comment.text}</small>
-                      {comment.image && (
-                        <div className="mt-2">
-                          <Image
-                            src={comment.image}
-                            fluid
-                            className="rounded"
-                            style={{ width: "100%", maxWidth: "200px" }}
-                          />
+                    <div className="comment-card">
+                      <div className="comment-header">
+                        <Image
+                          src={rootPath}
+                          roundedCircle
+                          width={40}
+                          height={40}
+                          className="me-3"
+                        />
+                        <div>
+                          <h6 className="mb-0">
+                            {comment.user.firstName} {comment.user.lastName}
+                          </h6>
+                          <small className="text-muted">
+                            {comment.user.jopTitle}
+                          </small>
                         </div>
-                      )}
+                      </div>
+                      <div className="comment-body">
+                        <div>{comment.content}</div>
+                        {comment.image && (
+                          <div className="mt-2">
+                            <Image
+                              src={comment.image}
+                              fluid
+                              className="rounded"
+                              style={{ width: "100%", maxWidth: "200px" }}
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}
-                {comments.length > 1 && (
+                {post.commentsCount > 1 && (
                   <Button
                     variant="link"
                     onClick={handleShowAllComments}
@@ -238,6 +318,52 @@ function Post({ post }) {
               </div>
             </Card.Body>
           </Card>
+          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Create Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleEditPostSubmit}>
+            <Form.Group controlId="newPostTitle">
+              <FormControl
+                type="text"
+                placeholder="Enter post title"
+                value={newPostTitle}
+                onChange={handleNewPostTitleChange}
+                className="mb-3"
+              />
+            </Form.Group>
+            <Form.Group controlId="newPostText">
+              <FormControl
+                as="textarea"
+                rows={3}
+                placeholder="What's on your mind?"
+                value={newPostText}
+                onChange={handleNewPostChange}
+                className="mb-3"
+              />
+            </Form.Group>
+            <Form.Group controlId="newPostImage">
+              <Form.Label>
+                <FaImage size={20} className="me-2" />
+                Add Photo
+              </Form.Label>
+              <FormControl
+                type="file"
+                accept="image/*"
+                onChange={handleNewPostImageChange}
+                className="mb-3"
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" onClick={() => setShowModal(false)} className="me-2">
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit">Post</Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
         </Col>
       </Row>
     </Container>

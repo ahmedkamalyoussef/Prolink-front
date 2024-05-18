@@ -1,5 +1,14 @@
-body{margin-top:20px;}
+.mainChat{margin-top:25px;}
 
+.chats {
+    max-height: 600px; /* Adjust as needed for your layout */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 .chat-online {
     color: #34ce57
 }

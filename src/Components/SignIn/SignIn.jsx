@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { login } from "../../Api/LoginAndRegister";
 import '../../Pages/Signin_Signup/Signin_SignupPage.css';
 
@@ -9,7 +9,7 @@ function SignInForm() {
     password: ""
   });
 
-  //  const navigate = useNavigate(); 
+    const navigate = useNavigate(); 
 
   const handleChange = (evt) => {
     setFormData({
@@ -23,16 +23,16 @@ function SignInForm() {
     console.log("Form data submitted:", formData);
     try {
       const response = await login(formData);
-      console.log("Response from server:", response);
+      // console.log("Response from server:", response);
       localStorage.setItem('authToken', response.data.token); 
-      // navigate('/home');
+      navigate('/home');
       setFormData({
         email: "",
         password: ""
       });
     } catch (error) {
       console.log("Error response:", error);
-      alert(`Login failed: ${error.response?.data?.message}`);
+      alert(`Login failed: $`);
     }
   };
 

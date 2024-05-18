@@ -1,0 +1,48 @@
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  background-color: #41c0ff;
+}
+.dropdown {
+  padding-left: 25px;
+}
+.brand-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.nav-icon {
+  color: white;
+  margin-left: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-profile-dropdown {
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+.notification-dropdown,
+.job-requests-dropdown {
+  position: absolute;
+  top: 70px;
+  right: 250px;
+  width: 300px;
+  max-height: 500px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+@media (max-width: 992px) {
+  .d-none {
+    display: none !important;
+  }
+  .d-lg-flex {
+    display: flex !important;
+  }
+}

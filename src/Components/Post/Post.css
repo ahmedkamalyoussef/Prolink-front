@@ -1,4 +1,27 @@
-/* Post.css */
+.comment-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+}
+
+.comment-header h6 {
+  margin-bottom: 0;
+}
+
+.comment-header small {
+  color: #6c757d;
+}
+
+.comment-body {
+  margin-top: 10px;
+}
+
 
 .options {
     position: absolute;

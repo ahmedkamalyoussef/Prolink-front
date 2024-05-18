@@ -1,3 +1,30 @@
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #132b37;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: #41c0ff;
+  border-radius: 11px;
+}
+
+  ::-webkit-scrollbar-thumb:hover {
+      background: #41c0ff;
+  }
+
+
+
+
+
+
+
+
+
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

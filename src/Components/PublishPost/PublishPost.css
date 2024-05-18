@@ -1,0 +1,54 @@
+.publish-post-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #eff1f18f;
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .publish-post-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .publish-post-card .card-body {
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #6c757d;
+  }
+  
+  .publish-post-card .card-body:hover {
+    color: #41c0ff;
+  }
+  
+  .publish-post-modal .modal-header {
+    border-bottom: none;
+  }
+  
+  .publish-post-modal .modal-body {
+    padding: 20px;
+  }
+  
+  .publish-post-modal .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .publish-post-modal .form-control::placeholder {
+    color: #6c757d;
+  }
+  
+  .publish-post-modal .btn-primary {
+    background-color: #41c0ff;
+    border-color: #41c0ff;
+    font-size: 14px;
+    padding: 5px 15px;
+  }
+  
+  .publish-post-modal .btn-secondary {
+    font-size: 14px;
+    padding: 5px 15px;
+  }
+  
