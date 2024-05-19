@@ -26,15 +26,15 @@ export const addPost = async (postData) => {
 };
 
 
-export const editPost = async (postId, postData) => {
+export const editPost = async (postId, newPostTitle,newPostText,newPostImage) => {
   try {
     const formData = new FormData();
-    if (postData.postImage) {
-      formData.append('PostImage', postData.postImage);
+    if (newPostImage) {
+      formData.append('PostImage', newPostImage);
     }
 
     const response = await axios.put(
-      `${baseUrl}api/Post/update-post?id=${postId}&Title=${postData.title}&Description=${postData.description}`,
+      `${baseUrl}api/Post/update-post?id=${postId}&Title=${newPostTitle}&Description=${newPostText}`,
       formData,
       {
         headers: {
@@ -133,7 +133,7 @@ export const deletePost = async (postId) => {
     });
     return response.data;
   } catch (error) {
+    console.error('Error deleting post:', error.response ? error.response.data : error.message);
     throw error;
   }
 };
-

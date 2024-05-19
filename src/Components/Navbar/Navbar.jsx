@@ -24,6 +24,9 @@ function NavbarC() {
     localStorage.removeItem("authToken");
     navigate("/sign");
   };
+  const handleSettings = () => {
+    navigate("/editprofile");
+  };
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
@@ -135,6 +138,7 @@ function NavbarC() {
                 Profile
               </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+              <Dropdown.Item onClick={handleSettings}>Settings</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Nav>

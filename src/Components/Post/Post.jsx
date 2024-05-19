@@ -126,12 +126,12 @@ function Post({ post }) {
   const handleEditPostSubmit = async (event) => {
     event.preventDefault();
     try {
-      const postData = {
-        title: newPostTitle,
-        description: newPostText,
-        postImage: newPostImage,
-      };
-      await editPost(post.id, postData);
+      // const postData = {
+      //   title: newPostTitle,
+      //   description: newPostText,
+      //   postImage: newPostImage,
+      // };
+      await editPost(post.id, newPostTitle,newPostText,newPostImage);
       setShowModal(false);
     } catch (error) {
       alert(`Failed to edit post: ${error}`);
@@ -266,7 +266,7 @@ function Post({ post }) {
                       className="me-2 postBtn "
                       onClick={handleLike}
                     >
-                      <FaRegThumbsUp className="me-1" />
+                      <FaRegThumbsUp className="me-0" />
                       <span>{`${post.likesCount}`}</span>
                       {/* {isLiked ? "Liked" : "Like"} */}
                     </Button>

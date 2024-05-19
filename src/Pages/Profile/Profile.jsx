@@ -91,11 +91,11 @@ function Profile() {
             </div>
           </div>
           <div className="card-body text-black px-4">
-            <div className="mb-1">
-              <p className="lead fw-normal mb-1">About</p>
-              <div className="px-4" style={{ backgroundColor: "#f8f9fa" }}>
+            <div className="mb-0">
+              <p className="lead fw-normal mb-0">About</p>
+              <div className="px-4" >
                 {UserData.jopTitle && (
-                  <p className="font-italic mb-1 jobTitle">
+                  <p className="font-italic text-lg mb-1 jopTitle" style={{ color: "#2599d4" }}>
                     {UserData.jopTitle}
                   </p>
                 )}
@@ -107,11 +107,11 @@ function Profile() {
           </div>
 
           <div className="card-body text-dark px-4">
-  <div className="mb-5">
+  <div className="mb-2">
     <p className="lead fw-normal mb-1">Skills</p>
     <div className="skills-container px-4">
-      {UserData.skills && UserData.skills.map((skill, index) => (
-        <div key={index} className="skill-item">{skill.name}</div>
+      {UserData.skill && UserData.skill.map((skill, index) => (
+        <div key={index} className="skill-item">{skill}</div>
       ))}
     </div>
   </div>

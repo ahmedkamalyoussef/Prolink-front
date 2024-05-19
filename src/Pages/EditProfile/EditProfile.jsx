@@ -1,22 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { fetchUserData, editUserData, editPicData } from "../../Api/User";
-
-import "./EditProfile.css";
+import React, { useState, useEffect, useRef } from "react";
+import { fetchUserData, editUserData, editPicData,editBackImgData } from "../../Api/User";
+import { Form, Button, Card, Row, Col } from "react-bootstrap";
+import { Upload } from "react-bootstrap-icons";
 import NavbarC from "../../Components/Navbar/Navbar";
+import "./EditProfile.css";
 
 function EditProfile() {
   const [userData, setUserData] = useState({});
   const [skills, setSkills] = useState([]);
-  const [profilePicture, setProfilePicture] = useState(null); // State to store the new profile picture
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(null);
+
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const jobTitleRef = useRef(null);
+  const phoneNumberRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const skillsRef = useRef(null);
 
   useEffect(() => {
     const handleFetchUserData = async () => {
       try {
         const response = await fetchUserData();
         setUserData(response.data);
-        if (response.data.skills) {
-          const skillNames = response.data.skills.map(skill => skill.name);
-          setSkills(skillNames);
+        if (response.data.skill) {
+          setSkills(response.data.skill);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -30,32 +38,39 @@ function EditProfile() {
     setSkills(skillsArray);
   };
 
-  const handleFileInputChange = (e) => {
+  const handleProfilePictureChange = (e) => {
     const file = e.target.files[0];
     setProfilePicture(file);
+  };
+
+  const handleBackgroundImageChange = (e) => {
+    const file = e.target.files[0];
+    setBackgroundImage(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const updatedUserData = {
-        ...userData,
-        firstName: e.target.inputFirstName.value,
-        lastName: e.target.inputLastName.value,
-        jopTitle: e.target.jopTitle.value,
-        phoneNumber: e.target.PhoneNumber.value,
-        description: e.target.Description.value,
-        skills: skills.map(skillName => ({ name: skillName }))
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        jopTitle: jobTitleRef.current.value,
+        phoneNumber: phoneNumberRef.current.value,
+        description: descriptionRef.current.value,
+        skill: skills,
       };
 
       await editUserData(updatedUserData);
       console.log("User data updated successfully:", updatedUserData);
 
       if (profilePicture) {
-        // const formData = new FormData();
-        // formData.append('profilePicture', profilePicture); // Append profile picture to FormData
-        await editPicData(profilePicture); // Call editPicData with FormData
-        console.log("Picture data updated successfully.");
+        await editPicData(profilePicture);
+        console.log("Profile picture updated successfully.");
+      }
+
+      if (backgroundImage) {
+        await editBackImgData(backgroundImage); 
+        console.log("Background image updated successfully.");
       }
     } catch (error) {
       console.error("Error updating user data:", error);
@@ -67,116 +82,137 @@ function EditProfile() {
       <NavbarC />
       <div className="container-xl px-4 mt-4">
         <hr className="mt-0 mb-4" />
-        <div className="row">
-          <div className="col-xl-4">
-            <div className="card mb-4 mb-xl-0">
-              <div className="card-header">Profile Picture</div>
-              <div className="card-body text-center">
+        <Row>
+          <Col xl={4}>
+            <Card className="mb-4 mb-xl-0">
+              <Card.Header>Profile Picture</Card.Header>
+              <Card.Body className="text-center">
                 <img
                   className="img-account-profile rounded-circle mb-2"
                   src="http://bootdey.com/img/Content/avatar/avatar1.png"
                   alt=""
                 />
-                <div className="small font-italic text-muted mb-4"></div>
-                <input
-                  id="profilePicture"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileInputChange}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-8">
-            <div className="card mb-4">
-              <div className="card-header">Account Details</div>
-              <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="row gx-3 mb-3">
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="inputFirstName">
-                        First name
-                      </label>
-                      <input
-                        className="form-control"
-                        id="inputFirstName"
-                        type="text"
-                        placeholder="Enter your first name"
-                        defaultValue={userData.firstName}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="inputLastName">
-                        Last name
-                      </label>
-                      <input
-                        className="form-control"
-                        id="inputLastName"
-                        type="text"
-                        placeholder="Enter your last name"
-                        defaultValue={userData.lastName}
-                      />
-                    </div>
-                  </div>
-                  <div className="row gx-3 mb-3">
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="jopTitle">
-                        Job Title
-                      </label>
-                      <input
-                        className="form-control"
-                        id="jopTitle"
-                        type="text"
-                        placeholder="Enter your job title"
-                        defaultValue={userData.jopTitle}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="PhoneNumber">
-                        Phone Number
-                      </label>
-                      <input
-                        className="form-control"
-                        id="PhoneNumber"
-                        type="text"
-                        placeholder="Enter your Phone Number"
-                        defaultValue={userData.phoneNumber}
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="Description">
-                      Description
-                    </label>
-                    <input
-                      className="form-control"
-                      id="Description"
+                <div className="small font-italic text-muted mb-4">
+                  JPG or PNG no larger than 5 MB
+                </div>
+                <Form.Label className="btn btn-info editPbtn">
+                  <Upload className="me-2" />
+                  Upload new image
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfilePictureChange}
+                    style={{ display: "none" }}
+                  />
+                </Form.Label>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xl={8}>
+            <Card className="mb-4">
+              <Card.Header>Account Details</Card.Header>
+              <Card.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Row className="gx-3 mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="inputFirstName">
+                        <Form.Label>First name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your first name"
+                          defaultValue={userData.firstName}
+                          ref={firstNameRef}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="inputLastName">
+                        <Form.Label>Last name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your last name"
+                          defaultValue={userData.lastName}
+                          ref={lastNameRef}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="gx-3 mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="jobTitle">
+                        <Form.Label>Job Title</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your job title"
+                          defaultValue={userData.jopTitle}
+                          ref={jobTitleRef}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="PhoneNumber">
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your phone number"
+                          defaultValue={userData.phoneNumber}
+                          ref={phoneNumberRef}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Form.Group className="mb-3" controlId="Description">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
                       type="text"
                       placeholder="Tell people about you"
                       defaultValue={userData.description}
+                      ref={descriptionRef}
                     />
-                  </div>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="Skills">
-                      Skills (comma-separated)
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="Skills"
-                      rows="3"
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="Skills">
+                    <Form.Label>Skills (comma-separated)</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
                       placeholder="Enter your skills separated by commas"
                       value={skills.join(", ")}
                       onChange={handleSkillsChange}
-                    ></textarea>
-                  </div>
-                  <button className="btn btn-primary" type="submit">
+                      ref={skillsRef}
+                    />
+                  </Form.Group>
+                  <Button variant="info" type="submit">
                     Save changes
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+            <Card className="mb-4 mt-4">
+              <Card.Header>Background Image</Card.Header>
+              <Card.Body className="text-center">
+                <img
+                  className="img-account-background mb-2"
+                  src="http://bootdey.com/img/Content/avatar/avatar1.png"
+                  alt=""
+                  style={{ width: '100%', height: '200px', objectFit: 'cover' }}
+                />
+                <div className="small font-italic text-muted mb-4">
+                  JPG or PNG no larger than 5 MB
+                </div>
+                <Form.Label className="btn btn-info editPbtn">
+                  <Upload className="me-2" />
+                  Upload new background
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handleBackgroundImageChange}
+                    style={{ display: "none" }}
+                  />
+                </Form.Label>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </>
   );

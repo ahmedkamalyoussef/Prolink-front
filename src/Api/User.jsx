@@ -67,4 +67,29 @@ export const fetchUserData = async () => {
       throw error;
     }
   };
+
+  export const editBackImgData = async (backgroundImage) => {
+    try {
+      const formData = new FormData();
+      if (backgroundImage) {  // Use backgroundImage instead of profilePicture
+        formData.append('file', backgroundImage);
+      }
+  
+      const response = await axios.put(
+        `${baseUrl}api/User/Update-BackImage`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      console.error('Error updating background image:', error);
+      throw error;
+    }
+  };
+  
   

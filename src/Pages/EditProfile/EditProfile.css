@@ -54,3 +54,28 @@
         margin-left: 1rem;
         margin-right: 1rem;
     }
+
+    /* Additional styling for profile picture input */
+.img-account-profile {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .small.font-italic.text-muted.mb-4 {
+    display: block;
+  }
+  
+  .editPbtn {
+    display: inline-block;
+    margin-top: 1em;
+    cursor: pointer;
+  }
+  
+  .editPbtn .me-2 {
+    margin-right: 0.5em;
+  }
+  .editPbtn {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
