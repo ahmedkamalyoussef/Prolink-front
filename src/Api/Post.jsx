@@ -28,19 +28,21 @@ export const addPost = async (postData) => {
 
 export const editPost = async (postId, postData) => {
   try {
-    console.log(postData.PostImage);
     const formData = new FormData();
-    if (postData.PostImage) {
-      formData.append('PostImage', postData.PostImage);
+    if (postData.postImage) {
+      formData.append('PostImage', postData.postImage);
     }
 
-    const response = await axios.put(`${baseUrl}api/Post/update-post?id=${postId}&Title=${postData.title}&Description=${postData.Description}`,
-     formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${authToken}`
+    const response = await axios.put(
+      `${baseUrl}api/Post/update-post?id=${postId}&Title=${postData.title}&Description=${postData.description}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${authToken}`,
+        },
       }
-    });
+    );
 
     return response.data;
   } catch (error) {
@@ -48,6 +50,7 @@ export const editPost = async (postId, postData) => {
     throw error;
   }
 };
+
 
 
 
@@ -65,6 +68,19 @@ export const fetchPosts = async () => {
   }
 };
 
+export const fetchUserPosts = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}api/Post/get-user-posts`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
+};
 
 export const addComment = async (postId, content) => {
   try {

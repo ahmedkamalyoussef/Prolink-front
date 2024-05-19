@@ -30,7 +30,7 @@ const Chat = () => {
               </div>
             </div>
           </div>
-          
+           
           <div className="chats">
           <FriendChats/>
           <FriendChats/>

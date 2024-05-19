@@ -1,7 +1,7 @@
 .mainChat{margin-top:25px;}
 
 .chats {
-    max-height: 600px; /* Adjust as needed for your layout */
+    max-height: 500px; /* Adjust as needed for your layout */
     overflow-y: auto; /* Enables vertical scrolling */
     padding: 10px;
     border: 1px solid #ddd;
@@ -20,7 +20,7 @@
 .chat-messages {
     display: flex;
     flex-direction: column;
-    max-height: 600px;
+    max-height: 500px;
     overflow-y: scroll
 }
 

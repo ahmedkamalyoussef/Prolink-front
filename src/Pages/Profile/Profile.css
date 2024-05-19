@@ -1,19 +1,12 @@
 .profilebtn{
-  height: 36px;
   overflow: visible;
   color: #ffffff;
   background-color: rgb(61, 183, 224);
   z-index:2;
-  
+  border-radius: 6px;
+
 }
-.profilebtn :hover{
-  height: 32px;
-  overflow: visible;
-  color: #ffffff;
-  background-color: rgb(61, 183, 224);
-  z-index:2;
-  transform: translate(3px);
-}
+
 .jobTitle{
   font-weight: bolder;
   color: rgb(61, 183, 224);
@@ -30,4 +23,7 @@
   border-radius: 5px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.proimg{
+  margin-top: 200px;
 }

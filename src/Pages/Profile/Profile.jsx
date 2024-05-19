@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Post from "../../Components/Post/Post";
 import PublishPost from "../../Components/PublishPost/PublishPost";
-import { fetchPosts } from "../../Api/Post";
+import { fetchUserPosts } from "../../Api/Post";
 import { fetchUserData } from "../../Api/User";
+import {Link} from 'react-router-dom';
 import "./Profile.css";
 import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
 import rootPath2 from "../../../../../private/Photos/_vectorr__-20220412-0002.jpg";
 
 import NavbarC from "../../Components/Navbar/Navbar";
+import { NavLink } from "react-bootstrap";
 
 function Profile() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +17,7 @@ function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchPosts();
+        const response = await fetchUserPosts();
         setPosts([]);
         setPosts(response.data);
       } catch (error) {
@@ -47,11 +49,11 @@ function Profile() {
                 backgroundImage: `url(${rootPath2}`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                height: '300px',
+                height: '400px',
               }}
           >
-            <div
-              className="ms-4 mt-5 py-5 d-flex flex-column pt-5"
+            <div 
+              className="ms-4  d-flex flex-column proimg "
               style={{ width: "150px" }}
             >
               <img
@@ -60,7 +62,7 @@ function Profile() {
                 className="mt-5 mb-2 img-thumbnail"
                 style={{ width: "150px", zIndex: "1" }}
               />
-              <div className="btn profilebtn ">Edit profile</div>
+              <Link to="/EditProfile" className="py-1 text-decoration-none text-center profilebtn" >Edit profile</Link>
             </div>
           </div>
 

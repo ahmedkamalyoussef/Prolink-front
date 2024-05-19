@@ -9,7 +9,7 @@ function SignUpForm() {
     phoneNumber: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: "",  
   });
 
   const handleChange = (evt) => {
@@ -28,16 +28,7 @@ function SignUpForm() {
     }
 
     try {
-      const response = await register({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phoneNumber: formData.phoneNumber,
-        email: formData.email,
-        password: formData.password,
-      });
-
-      console.log("Registration response:", response.data);
-      alert(`Registration successful: ${response.data.message}`);
+      const response = await register(formData);      
       setFormData({
         firstName: "",
         lastName: "",
@@ -47,8 +38,8 @@ function SignUpForm() {
         confirmPassword: "",
       });
     } catch (error) {
-      console.log("Registration error:", error.response);
-      alert(`Registration failed: ${error.response}`);
+      console.log("Registration error:", error);
+      alert(`Registration failed:`);
     }
   };
 

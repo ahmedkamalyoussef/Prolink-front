@@ -15,3 +15,56 @@ export const fetchUserData = async () => {
       throw error;
     }
   };
+  export const editUserData = async (formData) => {
+    try {
+      const response = await axios.put(`${baseUrl}api/User/update-info`,formData,{
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      throw error;
+    }
+  };
+
+  export const fetchUserByIdData = async (senderId) => {
+    try {
+      const response = await axios.get(`${baseUrl}api/User/get-by-id?id=${senderId}`,{
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      throw error;
+    }
+  };
+
+
+  export const editPicData = async (profilePicture) => {
+    try {
+      const formData = new FormData();
+      if (profilePicture) {
+        formData.append('file', profilePicture);
+      }
+  
+      const response = await axios.put(
+        `${baseUrl}api/User/Update-picture`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      console.error('Error updating picture:', error);
+      throw error;
+    }
+  };
+  

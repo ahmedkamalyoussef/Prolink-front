@@ -1,5 +1,5 @@
 .job-request-card {
-    max-width: 320px;
+  width: 90%;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -55,5 +55,34 @@
   .deny-button {
     background-color: #f44336;
     color: white;
+  }
+  .job-request-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .job-request-card.accepted {
+    background-color: #d4edda;
+  }
+  
+  .job-request-card.denied {
+    background-color: #f8d7da;
+  }
+  
+  .status-message {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .comment-body {
+    margin-top: 10px;
   }
   

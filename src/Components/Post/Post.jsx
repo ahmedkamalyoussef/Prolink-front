@@ -1,12 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Button, Row, Col, Image, Container, Form, InputGroup, FormControl, OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
-import { FaRegThumbsUp, FaImage, FaEllipsisV, FaEdit, FaTrash } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  Button,
+  Row,
+  Col,
+  Image,
+  Container,
+  Form,
+  InputGroup,
+  FormControl,
+  OverlayTrigger,
+  Tooltip,
+  Modal,
+} from "react-bootstrap";
+import {
+  FaRegThumbsUp,
+  FaImage,
+  FaEllipsisV,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
-import { addComment, addLike, deleteLike, deletePost, editPost } from '../../Api/Post';
+import {
+  addComment,
+  addLike,
+  deleteLike,
+  deletePost,
+  editPost,
+} from "../../Api/Post";
+import { fetchUserData } from "../../Api/User";
+import { sendJobRequest } from "../../Api/JobRequest";
 import "./Post.css";
-import { NavLink } from 'react-router-dom';
 
 function Post({ post }) {
+  const [userData, setUserData] = useState({});
   const [newComment, setNewComment] = useState("");
   const [commentImage, setCommentImage] = useState(null);
   const [showAllComments, setShowAllComments] = useState(false);
@@ -18,6 +46,18 @@ function Post({ post }) {
   const [newPostText, setNewPostText] = useState(post.description);
   const [newPostImage, setNewPostImage] = useState(post.postImage);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetchUserData();
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleNewPostTitleChange = (event) => {
     setNewPostTitle(event.target.value);
@@ -39,31 +79,35 @@ function Post({ post }) {
     setCommentImage(event.target.files[0]);
   };
 
+  const handleSendJobRequset = async (event) => {
+    event.preventDefault();
+    try {
+      await sendJobRequest(userData.id, post.id);
+    } catch (error) {
+      alert("Error sending job request");
+    }
+  };
+
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
     try {
       await addComment(post.id, newComment);
-      setNewComment('');
+      setNewComment("");
     } catch (error) {
-      alert('Error adding comment');
+      alert("Error adding comment");
     }
   };
 
   const handleLike = async () => {
-    if (isLiked) {
-      try {
+    try {
+      if (isLiked) {
         await deleteLike(post.likeId);
-      } catch (error) {
-        console.log(post.likeId)
-        alert(`Error deleting like ${post.likeId}`);
-      }
-    } else {
-      try {
+      } else {
         await addLike(post.id);
-      } catch (error) {
-        console.log(post.likeId)
-        alert('Error adding like');
       }
+      setIsLiked(!isLiked);
+    } catch (error) {
+      alert(`Error ${isLiked ? "deleting" : "adding"} like: ${error}`);
     }
   };
 
@@ -84,57 +128,40 @@ function Post({ post }) {
     try {
       const postData = {
         title: newPostTitle,
-        Description: newPostText,
-        PostImage: newPostImage
+        description: newPostText,
+        postImage: newPostImage,
       };
-      const response = await editPost(post.id, postData);
+      await editPost(post.id, postData);
       setShowModal(false);
     } catch (error) {
-      alert(`Failed to edit post: ${error.response?.data?.message || error.message}`);
+      alert(`Failed to edit post: ${error}`);
     }
   };
-  
-
-  // const resetForm = () => {
-  //   setNewPostTitle('');
-  //   setNewPostText('');
-  //   setNewPostImage(null);
-  // };
-
-  useEffect(() => {
-
-  }, []);
-
-  const fixedImageWidth = { width: "100%", maxWidth: "500px" };
 
   const calculateTimeDifference = (createdAt) => {
     const currentTime = new Date();
     const createdTime = new Date(createdAt);
     const difference = Math.abs(currentTime - createdTime);
-
     const minutes = Math.floor(difference / 60000);
     if (minutes < 60) {
       return `${minutes}m`;
     }
-
     const hours = Math.floor(minutes / 60);
     if (hours < 24) {
       return `${hours}h`;
     }
-
     const days = Math.floor(hours / 24);
     if (days < 2) {
       return `${days}d`;
     }
-
     return createdTime.toLocaleDateString();
   };
 
   const displayedComments = showAllComments
     ? post.comments
     : post.commentsCount > 0
-      ? post.comments.slice(0, 1)
-      : [];
+    ? post.comments.slice(0, 1)
+    : [];
 
   return (
     <Container className="py-2">
@@ -144,7 +171,10 @@ function Post({ post }) {
             <Card.Body>
               <div className="d-flex justify-content-between mb-3">
                 <div className="d-flex justify-content-left mb-3">
-                  <NavLink to="/profile" className="d-flex text-decoration-none text-black">
+                  <NavLink
+                    to="/profile"
+                    className="d-flex text-decoration-none text-black"
+                  >
                     <Image
                       src={rootPath}
                       roundedCircle
@@ -159,55 +189,61 @@ function Post({ post }) {
                           {calculateTimeDifference(post.dateCreated)}
                         </small>
                       </h6>
-
                       <small className="text-muted">
-                        {post.user.jopTitle} •
-                        <span className='px-3'>{post.user.rate}</span>
+                        {post.user.jopTitle} • {post.user.rate}
                       </small>
                     </div>
                   </NavLink>
                 </div>
-                <div>
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={<Tooltip>Options</Tooltip>}
-                  >
-                    <Button
-                      className="postBtn"
-                      variant="link"
-                      onClick={() => setShowOptions(!showOptions)}
+                {post.user.id === userData.id && (
+                  <div>
+                    <OverlayTrigger
+                      placement="top"
+                      overlay={<Tooltip>Options</Tooltip>}
                     >
-                      <FaEllipsisV />
-                    </Button>
-                  </OverlayTrigger>
-                  {showOptions && (
-                    <div className="options">
-                      <Button variant="link" className="postBtn">
-                        <FaEdit onClick={() => setShowModal(true)} />
+                      <Button
+                        className="postBtn"
+                        variant="link"
+                        onClick={() => setShowOptions(!showOptions)}
+                      >
+                        <FaEllipsisV />
                       </Button>
-                      <Button variant="link" className="postBtn">
-                        <FaTrash onClick={handleDeletePost} />
-                      </Button>
-                    </div>
-                  )}
-                </div>
+                    </OverlayTrigger>
+                    {showOptions && (
+                      <div className="options">
+                        <Button variant="link" className="postBtn">
+                          <FaEdit onClick={() => setShowModal(true)} />
+                        </Button>
+                        <Button
+                          variant="link"
+                          className="postBtn"
+                          onClick={handleDeletePost}
+                        >
+                          <FaTrash />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="mb-3">
-                <div style={fixedImageWidth}>
+                <div style={{ width: "100%", maxWidth: "500px" }}>
                   <h5 style={{ color: "#3c97bf" }}>{post.title}</h5>
                   <p>{post.description}</p>
-                  {
-                    <Image
-                      src={rootPath}
-                      fluid
-                      className="rounded"
-                      style={{ width: "100%" }}
-                    />
-                  }
+                  <Image
+                    src={rootPath}
+                    fluid
+                    className="rounded"
+                    style={{ width: "100%" }}
+                  />
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <Button variant="primary" className="postBtn">
+                <Button
+                  variant="primary"
+                  className="postBtn"
+                  onClick={handleSendJobRequset}
+                >
                   Apply for Job
                 </Button>
                 <div className="d-flex align-items-center">
@@ -215,19 +251,24 @@ function Post({ post }) {
                     placement="top"
                     overlay={
                       <Tooltip>
-                        {post.likesCount > 0
-                          ? likes.join(", ")
+                        {likes.length > 0
+                          ? likes.map((like, index) => (
+                              <div key={index}>
+                                {`${like.user.firstName} ${like.user.lastName}`}
+                              </div>
+                            ))
                           : "No likes yet"}
                       </Tooltip>
                     }
                   >
                     <Button
                       variant={isLiked ? "primary" : "outline-secondary"}
-                      className="me-2 postBtn"
+                      className="me-2 postBtn "
                       onClick={handleLike}
                     >
                       <FaRegThumbsUp className="me-1" />
-                      {post.likesCount}
+                      <span>{`${post.likesCount}`}</span>
+                      {/* {isLiked ? "Liked" : "Like"} */}
                     </Button>
                   </OverlayTrigger>
                   <Button
@@ -241,7 +282,6 @@ function Post({ post }) {
                 </div>
               </div>
               <hr />
-
               {commentInputVisible && (
                 <Form onSubmit={handleCommentSubmit}>
                   <h6>Comments</h6>
@@ -271,23 +311,31 @@ function Post({ post }) {
                 {displayedComments.map((comment, index) => (
                   <div key={index} className="d-flex mb-3">
                     <div className="comment-card">
-                      <div className="comment-header">
-                        <Image
-                          src={rootPath}
-                          roundedCircle
-                          width={40}
-                          height={40}
-                          className="me-3"
-                        />
-                        <div>
-                          <h6 className="mb-0">
-                            {comment.user.firstName} {comment.user.lastName}
-                          </h6>
-                          <small className="text-muted">
-                            {comment.user.jopTitle}
-                          </small>
+                      <NavLink
+                        to="/profile"
+                        className="d-flex text-decoration-none text-black"
+                      >
+                        <div className="comment-header">
+                          <Image
+                            src={rootPath}
+                            roundedCircle
+                            width={40}
+                            height={40}
+                            className="me-3"
+                          />
+                          <div>
+                            <h6 className="mb-0">
+                              {comment.user.firstName} {comment.user.lastName}
+                              <small className="px-3">
+                                {calculateTimeDifference(comment.timestamp)}
+                              </small>
+                            </h6>
+                            <small className="text-muted">
+                              {comment.user.jopTitle}
+                            </small>
+                          </div>
                         </div>
-                      </div>
+                      </NavLink>
                       <div className="comment-body">
                         <div>{comment.content}</div>
                         {comment.image && (
@@ -319,51 +367,57 @@ function Post({ post }) {
             </Card.Body>
           </Card>
           <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Create Post</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleEditPostSubmit}>
-            <Form.Group controlId="newPostTitle">
-              <FormControl
-                type="text"
-                placeholder="Enter post title"
-                value={newPostTitle}
-                onChange={handleNewPostTitleChange}
-                className="mb-3"
-              />
-            </Form.Group>
-            <Form.Group controlId="newPostText">
-              <FormControl
-                as="textarea"
-                rows={3}
-                placeholder="What's on your mind?"
-                value={newPostText}
-                onChange={handleNewPostChange}
-                className="mb-3"
-              />
-            </Form.Group>
-            <Form.Group controlId="newPostImage">
-              <Form.Label>
-                <FaImage size={20} className="me-2" />
-                Add Photo
-              </Form.Label>
-              <FormControl
-                type="file"
-                accept="image/*"
-                onChange={handleNewPostImageChange}
-                className="mb-3"
-              />
-            </Form.Group>
-            <div className="d-flex justify-content-end">
-              <Button variant="secondary" onClick={() => setShowModal(false)} className="me-2">
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit">Post</Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Post</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={handleEditPostSubmit}>
+                <Form.Group controlId="newPostTitle">
+                  <FormControl
+                    type="text"
+                    placeholder="Enter post title"
+                    value={newPostTitle}
+                    onChange={handleNewPostTitleChange}
+                    className="mb-3"
+                  />
+                </Form.Group>
+                <Form.Group controlId="newPostText">
+                  <FormControl
+                    as="textarea"
+                    rows={3}
+                    placeholder="What's on your mind?"
+                    value={newPostText}
+                    onChange={handleNewPostChange}
+                    className="mb-3"
+                  />
+                </Form.Group>
+                <Form.Group controlId="newPostImage">
+                  <Form.Label>
+                    <FaImage size={20} className="me-2" />
+                    Add Photo
+                  </Form.Label>
+                  <FormControl
+                    type="file"
+                    accept="image/*"
+                    onChange={handleNewPostImageChange}
+                    className="mb-3"
+                  />
+                </Form.Group>
+                <div className="d-flex justify-content-end">
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowModal(false)}
+                    className="me-2"
+                  >
+                    Cancel
+                  </Button>
+                  <Button variant="primary" type="submit">
+                    Save Changes
+                  </Button>
+                </div>
+              </Form>
+            </Modal.Body>
+          </Modal>
         </Col>
       </Row>
     </Container>
