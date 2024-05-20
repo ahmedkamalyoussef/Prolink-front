@@ -42,6 +42,19 @@ export const fetchUserData = async () => {
       throw error;
     }
   };
+  export const fetchUserByNameData = async (name) => {
+    try {
+      const response = await axios.get(`${baseUrl}api/User/get-by-name?name=${name}`,{
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      throw error;
+    }
+  };
 
 
   export const editPicData = async (profilePicture) => {

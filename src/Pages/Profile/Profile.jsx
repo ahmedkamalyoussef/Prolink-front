@@ -8,9 +8,6 @@ import "./Profile.css";
 import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
 import rootPath2 from "../../../../../private/Photos/_vectorr__-20220412-0002.jpg";
 
-import NavbarC from "../../Components/Navbar/Navbar";
-import { NavLink } from "react-bootstrap";
-
 function Profile() {
   const [posts, setPosts] = useState([]);
   const [UserData, setUserData] = useState({});
@@ -40,7 +37,6 @@ function Profile() {
 
   return (
     <>
-      <NavbarC />
       <div className="container py-2 h-100 ">
         <div className="card">
           <div

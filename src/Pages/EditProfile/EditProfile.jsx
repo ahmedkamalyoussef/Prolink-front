@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { fetchUserData, editUserData, editPicData,editBackImgData } from "../../Api/User";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Upload } from "react-bootstrap-icons";
-import NavbarC from "../../Components/Navbar/Navbar";
 import "./EditProfile.css";
 
 function EditProfile() {
@@ -79,7 +78,6 @@ function EditProfile() {
 
   return (
     <>
-      <NavbarC />
       <div className="container-xl px-4 mt-4">
         <hr className="mt-0 mb-4" />
         <Row>

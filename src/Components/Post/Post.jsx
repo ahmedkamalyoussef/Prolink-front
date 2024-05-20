@@ -19,6 +19,7 @@ import {
   FaEllipsisV,
   FaEdit,
   FaTrash,
+  FaCheck 
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
@@ -166,7 +167,7 @@ function Post({ post }) {
   return (
     <Container className="py-2">
       <Row className="justify-content-center">
-        <Col lg="5">
+        <Col lg="5" md={8} sm={10}>
           <Card className="mb-3 shadow-sm">
             <Card.Body>
               <div className="d-flex justify-content-between mb-3">
@@ -239,13 +240,17 @@ function Post({ post }) {
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <Button
-                  variant="primary"
-                  className="postBtn"
-                  onClick={handleSendJobRequset}
-                >
-                  Apply for Job
-                </Button>
+              {post.user.id !== userData.id ? (
+        <Button
+          variant="primary"
+          className="postBtn"
+          onClick={handleSendJobRequset}
+        >
+          {post.isRequestSent ? <FaCheck /> : 'Apply for Job'}
+        </Button>
+      ) : (
+        <div></div>
+      )}
                 <div className="d-flex align-items-center">
                   <OverlayTrigger
                     placement="top"
@@ -263,11 +268,11 @@ function Post({ post }) {
                   >
                     <Button
                       variant={isLiked ? "primary" : "outline-secondary"}
-                      className="me-2 postBtn "
+                      className="me-2 postBtn text-center align-content-center align-items-center"
                       onClick={handleLike}
                     >
                       <FaRegThumbsUp className="me-0" />
-                      <span>{`${post.likesCount}`}</span>
+                      <span className="px-1">{`${post.likesCount}`}</span>
                       {/* {isLiked ? "Liked" : "Like"} */}
                     </Button>
                   </OverlayTrigger>

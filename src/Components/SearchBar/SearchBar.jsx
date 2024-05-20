@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom'; 
+import {useDispatch} from "react-redux"
+import { setSearch } from '../../Redux/Slices/SearchSlice';
 const SearchContainer = styled.div`
   display: table;
   form {
@@ -74,6 +76,8 @@ const AppContainer = styled.div`
 `;
 
 const SearchInput = () => {
+  const dispatcher = useDispatch();
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -82,7 +86,14 @@ const SearchInput = () => {
   const handleChange = (e) => setInputValue(e.target.value);
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatcher(setSearch(inputValue));
+    navigate(`/search`);
+  };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
   };
 
   return (
@@ -94,8 +105,10 @@ const SearchInput = () => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
+          onKeyPress={handleKeyPress} 
           value={isActive ? inputValue : ''}
         />
+        <input type="submit" hidden />
       </form>
       <div>
         <svg>
@@ -105,6 +118,7 @@ const SearchInput = () => {
     </SearchContainer>
   );
 };
+
 
 const SearchBar = () => (
   <AppContainer>
