@@ -4,6 +4,7 @@ import { fetchPostsByTitle } from '../../Api/Post';
 import { fetchUserByNameData } from '../../Api/User';
 import Post from '../../Components/Post/Post';
 import './Search.css';
+import UserCard from '../../Components/UserCard/UserCard';
 
 function SearchPage() {
   const [activeTab, setActiveTab] = useState("allResults");
@@ -58,18 +59,25 @@ function SearchPage() {
                     <a href="#users" onClick={() => handleTabChange("users")} className={`nav-link ${activeTab === "users" ? "active" : ""}`}>Users</a>
                   </li>
                 </ul>
-                <div className="tab-content">
+                <div className="tab-content ">
                   <div className={`tab-pane ${activeTab === "allResults" ? "active" : ""}`} id="home">
                     {Array.isArray(posts) && posts.length > 0 ? (
                       posts.map((post, index) => (
                         <Post key={index} post={post} />
                       ))
                     ) : (
-                      <p>No posts found</p>
+                      <strong className='text-center'>No posts found</strong>
                     )}
                   </div>
                   <div className={`tab-pane ${activeTab === "users" ? "active" : ""}`} id="users">
                     {/* Users content */}
+                    {Array.isArray(users) && users.length > 0 ? (
+                      users.map((user, index) => (
+                        <UserCard key={index} user={user}/>
+                      ))
+                    ) : (
+                      <strong className='text-center'>No posts found</strong>
+                    )}
                   </div>
                 </div>
               </div>

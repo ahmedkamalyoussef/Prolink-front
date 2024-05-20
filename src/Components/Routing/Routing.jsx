@@ -21,7 +21,7 @@ const routers = createBrowserRouter([
     children: [
       {index:true,element:<Home/>},
       {path:'home',element:<Home/>},
-      {path:'profile',element:<Profile/>},
+      {path:'profile/:userId',element:<Profile/>},
       {path:'chat',element:<Chat/>},
       {path:'editprofile',element:<EditProfile/>},
       {path:'search',element:<SearchPage/>},

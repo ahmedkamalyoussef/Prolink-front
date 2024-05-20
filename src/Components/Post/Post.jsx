@@ -173,7 +173,7 @@ function Post({ post }) {
               <div className="d-flex justify-content-between mb-3">
                 <div className="d-flex justify-content-left mb-3">
                   <NavLink
-                    to="/profile"
+                    to={`/profile/${post.user.id}`}
                     className="d-flex text-decoration-none text-black"
                   >
                     <Image
@@ -317,7 +317,7 @@ function Post({ post }) {
                   <div key={index} className="d-flex mb-3">
                     <div className="comment-card">
                       <NavLink
-                        to="/profile"
+                        to={`/profile/${post.user.id}`}
                         className="d-flex text-decoration-none text-black"
                       >
                         <div className="comment-header">

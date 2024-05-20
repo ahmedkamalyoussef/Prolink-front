@@ -82,6 +82,19 @@ export const fetchPostsByTitle = async (title) => {
     throw error;
   }
 };
+export const fetchUserPostsById = async (userId) => {
+  try {
+    const response = await axios.get(`${baseUrl}api/Post/get-posts-By-user-id?id=${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
+};
 
 export const fetchUserPosts = async () => {
   try {
