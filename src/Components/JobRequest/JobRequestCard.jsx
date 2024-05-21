@@ -80,7 +80,7 @@ const JobRequestCard = ({ id, dateCreated, status, sender }) => {
       {status === 0 && (
         <div className="job-request-actions">
           <button className="accept-button" onClick={() => handleAcceptJob(id)}>Accept</button>
-          <button className="deny-button" onClick={() => handleDeclineJob(id)}>Deny</button>
+          <button className="deny-button" onClick={() => handleDeclineJob(id)} >Deny</button>
         </div>
       )}
       {status === 1 && (

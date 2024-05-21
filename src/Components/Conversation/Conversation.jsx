@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Conversation() {
+function Conversation({messages,friend}) {
   return (
     <>
       <div className="col-12 col-lg-7 col-xl-9">
@@ -10,7 +10,7 @@ function Conversation() {
                 <img src="https://bootdey.com/img/Content/avatar/avatar3.png" className="rounded-circle mr-1" alt="Sharon Lessman" width={40} height={40} />
               </div>
               <div className="flex-grow-1 px-3">
-                <strong> Sharon Lessman</strong>
+                <strong> {friend.firstName}</strong>
               </div>
               
             </div>

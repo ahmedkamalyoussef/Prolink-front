@@ -1,0 +1,46 @@
+.friend-chat-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.friend-chat-user-card-link {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.friend-chat-avatar {
+    border: 1px solid #ccc;
+    border-radius: 50%;
+}
+
+
+
+.friend-chat-user-card-info h5 {
+    /* margin-bottom: 1px; */
+    font-size: 1.1rem;
+}
+
+.friend-chat-user-card-info p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+@media (max-width: 576px) {
+    .friend-chat-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .friend-chat-avatar {
+        margin-bottom: 10px;
+    }
+
+    .friend-chat-user-card-info {
+        margin-top: 10px;
+        /* text-align: center; */
+    }
+}

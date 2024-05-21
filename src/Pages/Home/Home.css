@@ -1,0 +1,31 @@
+.home-container {
+    display: flex;
+  }
+  
+  .content {
+    margin-left: 250px; /* Adjust this margin if needed */
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      margin-left: 0;
+    }
+  }
+  .home-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .content {
+    margin: 0 250px; /* Adjust the margin to account for both sidebars */
+    width: calc(100% - 500px); /* Adjust the width accordingly */
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      margin: 0;
+      width: 100%;
+    }
+  }
+  

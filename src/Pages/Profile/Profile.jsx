@@ -57,15 +57,15 @@ function Profile() {
       }
     };
 
-    const HandlefetchUserData = async () => {
-      try {
-        const response = await fetchUserByIdData(userId);
-        setUserData({});
-        setUserData(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
+      const HandlefetchUserData = async () => {
+        try {
+          const response = await fetchUserByIdData(userId);
+          setUserData({});
+          setUserData(response.data);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      };
 
     const HandleCurrentfetchUserData = async () => {
       try {
@@ -80,7 +80,7 @@ function Profile() {
     HandlefetchUserData();
     HandleCurrentfetchUserData();
     fetchData();
-  }, []);
+  }, [userId]);
 
   return (
     <>
@@ -139,7 +139,7 @@ function Profile() {
                     placement="bottom"
                     overlay={<Tooltip id="tooltip-friend">Add Friend</Tooltip>}
                   >
-                  {UserData.isFriend ? <></>:(<Button
+                  {0 ? <></>:(<Button
                       variant="primary"
                       className="postBtn addFriendBtn"
                       onClick={() => HandleAddFriend(UserData.id)}

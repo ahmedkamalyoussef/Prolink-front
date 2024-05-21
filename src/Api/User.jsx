@@ -31,14 +31,14 @@ export const fetchUserData = async () => {
 
   export const fetchUserByIdData = async (senderId) => {
     try {
-      const response = await axios.get(`${baseUrl}api/User/get-by-id?id=${senderId}`,{
+      const response = await axios.get(`${baseUrl}api/User/get-by-id?id=${senderId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       });
       return response;
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error('Error fetching user by ID:', error);
       throw error;
     }
   };

@@ -13,25 +13,13 @@ import {
   Tooltip,
   Modal,
 } from "react-bootstrap";
-import {
-  FaRegThumbsUp,
-  FaImage,
-  FaEllipsisV,
-  FaEdit,
-  FaTrash,
-  FaCheck 
-} from "react-icons/fa";
+import { FaRegThumbsUp, FaImage, FaEllipsisV, FaEdit, FaTrash, FaCheck } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
-import {
-  addComment,
-  addLike,
-  deleteLike,
-  deletePost,
-  editPost,
-} from "../../Api/Post";
+import { addComment, addLike, deleteLike, deletePost, editPost } from "../../Api/Post";
 import { fetchUserData } from "../../Api/User";
 import { sendJobRequest } from "../../Api/JobRequest";
+import { Follow } from "../../Api/Follow";
 import "./Post.css";
 
 function Post({ post }) {
@@ -83,7 +71,7 @@ function Post({ post }) {
   const handleSendJobRequset = async (event) => {
     event.preventDefault();
     try {
-      await sendJobRequest(userData.id, post.id);
+      await sendJobRequest(post.user.id, post.id);
     } catch (error) {
       alert("Error sending job request");
     }
@@ -127,17 +115,22 @@ function Post({ post }) {
   const handleEditPostSubmit = async (event) => {
     event.preventDefault();
     try {
-      // const postData = {
-      //   title: newPostTitle,
-      //   description: newPostText,
-      //   postImage: newPostImage,
-      // };
-      await editPost(post.id, newPostTitle,newPostText,newPostImage);
+      await editPost(post.id, newPostTitle, newPostText, newPostImage);
       setShowModal(false);
     } catch (error) {
       alert(`Failed to edit post: ${error}`);
     }
   };
+
+  const HandleFollow = async () => {
+    try {
+      const response = await Follow(post.user.id);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error following user:", error);
+    }
+  };
+
 
   const calculateTimeDifference = (createdAt) => {
     const currentTime = new Date();
@@ -226,6 +219,26 @@ function Post({ post }) {
                     )}
                   </div>
                 )}
+                {/* Follow Button */}
+
+
+
+
+                
+                {/* {!post.isUserFollowed && post.user.id !== userData.id && (
+                  <Button variant="primary" className="postBtn" onClick={HandleFollow}>
+                    Follow
+                  </Button>
+                )} */}
+
+
+
+
+
+
+
+
+
               </div>
               <div className="mb-3">
                 <div style={{ width: "100%", maxWidth: "500px" }}>
@@ -239,18 +252,34 @@ function Post({ post }) {
                   />
                 </div>
               </div>
+
+
+
+
+
+
+
+
+
               <div className="d-flex justify-content-between align-items-center mb-3">
-              {post.user.id !== userData.id ? (
-        <Button
-          variant="primary"
-          className="postBtn"
-          onClick={handleSendJobRequset}
-        >
-          {post.isRequestSent ? <FaCheck /> : 'Apply for Job'}
-        </Button>
-      ) : (
-        <div></div>
-      )}
+                {post.user.id !== userData.id ? (
+                  <Button
+                    variant="primary"
+                    className="postBtn"
+                    onClick={handleSendJobRequset}
+                  >
+                    {post.isRequestSent ? <FaCheck /> : "Apply for Job"}
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+
+
+
+
+
+
+
                 <div className="d-flex align-items-center">
                   <OverlayTrigger
                     placement="top"
@@ -430,3 +459,4 @@ function Post({ post }) {
 }
 
 export default Post;
+

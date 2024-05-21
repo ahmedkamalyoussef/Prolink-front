@@ -22,42 +22,40 @@
   margin-top: 10px;
 }
 
-
 .options {
-    position: absolute;
-    top: 100px;
-    right: 10px;
-    transform: translateY(-50%);
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px; 
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    z-index: 999;
-    animation: fadeIn 0.3s ease-in-out; /* Add animation for appearance */
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out; /* Add animation for appearance */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-50%) scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(-50%) scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
   }
-  
-  .options .postBtn {
-    margin-bottom: 5px;
-  }
-  
-  .options .postBtn:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .options .postBtn:focus {
-    outline: none;
-  }
-  
+}
+
+.options .postBtn {
+  margin-bottom: 5px;
+}
+
+.options .postBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.options .postBtn:focus {
+  outline: none;
+}

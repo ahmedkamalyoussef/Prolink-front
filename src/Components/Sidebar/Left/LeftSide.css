@@ -1,0 +1,56 @@
+.left-side {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    height: 90%;
+    min-width: 350px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .left-side {
+      width: 100%;
+      height: auto;
+      position: relative;
+      box-shadow: none;
+    }
+  }
+  .left-side {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    height: 90%;
+    min-width: 350px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .left-side {
+      width: 100%;
+      height: auto;
+      position: relative;
+      box-shadow: none;
+    }
+  }
+  
+  .friends-section,
+  .friend-requests-section {
+    margin-bottom: 20px; /* Add some space between sections */
+  }
+  
+  .friends-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .friends-list li {
+    margin-bottom: 10px;
+  }
+  

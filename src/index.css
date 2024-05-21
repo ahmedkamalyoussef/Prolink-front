@@ -1,5 +1,16 @@
+body {
+  margin: 0;
+  /* display: flex; */
+  place-items: center;
+  min-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar */
+}
+
+
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
 }
 
 ::-webkit-scrollbar-track {
@@ -9,7 +20,8 @@
 
 ::-webkit-scrollbar-thumb {
   background: #41c0ff;
-  border-radius: 11px;
+  border-radius: 0px;
+  height:0px;
 }
 
   ::-webkit-scrollbar-thumb:hover {

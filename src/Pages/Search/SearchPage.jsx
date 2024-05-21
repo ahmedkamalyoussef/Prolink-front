@@ -13,7 +13,7 @@ function SearchPage() {
   const [users, setUsers] = useState([]);
 
   const handleTabChange = (tab) => {
-    setActiveTab(tab);
+    setActiveTab(tab); 
   };
 
   useEffect(() => {

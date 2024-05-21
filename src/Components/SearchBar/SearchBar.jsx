@@ -78,8 +78,8 @@ const AppContainer = styled.div`
 const SearchInput = () => {
   const dispatcher = useDispatch();
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [isActive, setIsActive] = useState(false);
 
   const handleFocus = () => setIsActive(true);
   const handleBlur = () => setIsActive(false);

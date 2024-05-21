@@ -4,6 +4,14 @@ import Post from '../../Components/Post/Post';
 import PublishPost from '../../Components/PublishPost/PublishPost';
 import { fetchPosts } from '../../Api/Post';
 import LeftSide from '../../Components/Sidebar/Left/LeftSide';
+import RightSide from '../../Components/Sidebar/RightSide/RightSide';
+
+const profile = {
+  image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
+  name: 'Jane Doe',
+  rate: '$50/hr',
+  followers: 1200,
+};
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -12,7 +20,6 @@ function Home() {
     const fetchData = async () => {
       try {
         const response = await fetchPosts();
-        setPosts([]);
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -20,16 +27,13 @@ function Home() {
     };
 
     fetchData();
-  },[]);
-
-  
+  }, []);
 
   return (
-    <>
-    
-      <LeftSide/>
-      <Container className="py-1">
-        <PublishPost  />
+    <div className="home-container">
+      <LeftSide />
+      <Container className="content py-1">
+        <PublishPost />
         <div className="d-flex justify-content-center">
           <hr className="col-lg-5" />
         </div>
@@ -37,8 +41,8 @@ function Home() {
           <Post key={index} post={post} />
         ))}
       </Container>
-      
-    </>
+      <RightSide profile={profile} />
+    </div>
   );
 }
 

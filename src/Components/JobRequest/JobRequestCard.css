@@ -1,88 +1,81 @@
 .job-request-card {
   width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    background-color: #fff;
-    margin: 10px;
-  }
-  
-  .job-request-header {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .profile-name {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .job-request-content {
-    margin-top: 10px;
-    font-size: 15px;
-    color: #666;
-  }
-  
-  .job-request-actions {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .accept-button,
-  .deny-button {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .accept-button {
-    background-color: #41c0ff;
-    color: white;
-  }
-  
-  .deny-button {
-    background-color: #f44336;
-    color: white;
-  }
-  .job-request-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .job-request-card.accepted {
-    background-color: #d4edda;
-  }
-  
-  .job-request-card.denied {
-    background-color: #f8d7da;
-  }
-  
-  .status-message {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .comment-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-  
-  .comment-body {
-    margin-top: 10px;
-  }
-  
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  background-color: #fff;
+  margin: 10px;
+}
+
+.job-request-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.job-request-content {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #666;
+}
+
+.job-request-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.accept-button,
+.deny-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.accept-button {
+  background-color: #41c0ff;
+  color: white;
+}
+
+.deny-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.job-request-card.accepted {
+  background-color: #d4edda;
+}
+
+.job-request-card.denied {
+  background-color: #f8d7da;
+}
+
+.status-message {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.comment-body {
+  margin-top: 10px;
+}

@@ -1,7 +1,11 @@
 .mainChat{margin-top:25px;}
-
+.friend-chat-user-card-link{
+    background-color: transparent;
+    border: none;
+}
 .chats {
-    max-height: 500px; /* Adjust as needed for your layout */
+    
+    height: 565px; /* Adjust as needed for your layout */
     overflow-y: auto; /* Enables vertical scrolling */
     padding: 10px;
     border: 1px solid #ddd;
