@@ -16,7 +16,7 @@ function Conversation({messages,friend}) {
             </div>
           </div>
           <div className="position-relative">
-            <div className="chat-messages p-4">
+            <div className="chat-messages p -4">
               <div className="chat-message-right pb-4">
                 <div>
                   <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="rounded-circle mr-1" alt="Chris Wood" width={40} height={40} />
