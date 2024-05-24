@@ -15,7 +15,7 @@ import {
 } from "react-bootstrap";
 import { FaRegThumbsUp, FaImage, FaEllipsisV, FaEdit, FaTrash, FaCheck } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
+//import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
 import { addComment, addLike, deleteLike, deletePost, editPost } from "../../Api/Post";
 import { fetchUserData } from "../../Api/User";
 import { sendJobRequest } from "../../Api/JobRequest";
@@ -23,6 +23,7 @@ import { Follow } from "../../Api/Follow";
 import "./Post.css";
 
 function Post({ post }) {
+  const rootPath="/@fs/D:/Visual%20studio/ProLink.api/ProLink.api/wwwRoot";
   const [userData, setUserData] = useState({});
   const [newComment, setNewComment] = useState("");
   const [commentImage, setCommentImage] = useState(null);
@@ -30,7 +31,7 @@ function Post({ post }) {
   const [likes, setLikes] = useState(post.likes);
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [showOptions, setShowOptions] = useState(false);
-  const [commentInputVisible, setCommentInputVisible] = useState(false);
+  const [commentInputVisible, setCommentInputVisible] = useState(true);
   const [newPostTitle, setNewPostTitle] = useState(post.title);
   const [newPostText, setNewPostText] = useState(post.description);
   const [newPostImage, setNewPostImage] = useState(post.postImage);
@@ -170,16 +171,16 @@ function Post({ post }) {
                     className="d-flex text-decoration-none text-black"
                   >
                     <Image
-                      src={rootPath}
+                      src={rootPath+post.user.profilePicture}
                       roundedCircle
-                      width={40}
-                      height={40}
-                      className="me-3"
+                      width={55}
+                      height={55}
+                      className="me-2"
                     />
                     <div>
                       <h6 className="mb-0">
                         {post.user.firstName} {post.user.lastName}
-                        <small className="px-3">
+                        <small className="px-3 " style={{color:"#ABB2B9"}}>
                           {calculateTimeDifference(post.dateCreated)}
                         </small>
                       </h6>
@@ -242,10 +243,10 @@ function Post({ post }) {
               </div>
               <div className="mb-3">
                 <div style={{ width: "100%", maxWidth: "500px" }}>
-                  <h5 style={{ color: "#3c97bf" }}>{post.title}</h5>
-                  <p>{post.description}</p>
+                  <h5 style={{ color: "#17202A " }}>{post.title}</h5>
+                  <p style={{color:" #515A5A"}}>{post.description}</p>
                   <Image
-                    src={rootPath}
+                    src={rootPath+post.PostImage}
                     fluid
                     className="rounded"
                     style={{ width: "100%" }}
@@ -305,17 +306,17 @@ function Post({ post }) {
                       {/* {isLiked ? "Liked" : "Like"} */}
                     </Button>
                   </OverlayTrigger>
-                  <Button
+                  {/* <Button
                     className="postBtn"
                     variant="primary"
                     onClick={() => setCommentInputVisible(!commentInputVisible)}
                     style={{ cursor: "pointer" }}
                   >
                     Comment
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
-              <hr />
+              <hr style={{color:"#3498DB"}}/>
               {commentInputVisible && (
                 <Form onSubmit={handleCommentSubmit}>
                   <h6>Comments</h6>
@@ -337,7 +338,7 @@ function Post({ post }) {
                     </InputGroup.Text>
                   </InputGroup>
                   <Button className="postBtn" variant="primary" type="submit">
-                    Post Comment
+                    Send
                   </Button>
                 </Form>
               )}

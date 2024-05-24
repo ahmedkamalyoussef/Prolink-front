@@ -20,7 +20,7 @@ const LeftSide = () => {
   }, []);
 
   return (
-    <div className="left-side text-center">
+    <div className="left-side text-start">
       <h4 className="">
         <FaUserFriends /> Friends
       </h4>

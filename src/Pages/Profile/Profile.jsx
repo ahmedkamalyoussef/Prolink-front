@@ -7,13 +7,14 @@ import { Follow, UnFollow } from "../../Api/Follow";
 import { AddFriend } from "../../Api/Friend";
 import { Link } from "react-router-dom";
 import "./Profile.css";
-import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/9ea93306-869c-4e25-88b9-253c4a22dd00.jpg";
+//import rootPath from "../../../../../Visual studio/ProLink.api/ProLink.api/wwwRoot/Images/ahmed0a41468158/Profile/3ef09921-e6dd-4a3a-a718-a046ce48946a.jpg";
 import rootPath2 from "../../../../../private/Photos/_vectorr__-20220412-0002.jpg";
 import { useParams } from "react-router-dom";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FaUserPlus } from "react-icons/fa";
 
 function Profile() {
+  const rootPath="/@fs/D:/Visual%20studio/ProLink.api/ProLink.api/wwwRoot";
   let { userId } = useParams();
   const [posts, setPosts] = useState([]);
   const [UserData, setUserData] = useState({});
@@ -47,6 +48,7 @@ function Profile() {
   };
 
   useEffect(() => {
+    console.log(UserData.profilePicture);
     const fetchData = async () => {
       try {
         const response = await fetchUserPostsById(userId);
@@ -81,7 +83,7 @@ function Profile() {
     HandleCurrentfetchUserData();
     fetchData();
   }, [userId]);
-
+console.log(UserData.profilePicture);
   return (
     <>
       <div className="container py-2 h-100 ">
@@ -100,7 +102,7 @@ function Profile() {
               style={{ width: "150px" }}
             >
               <img
-                src={rootPath}
+                src={rootPath+UserData.profilePicture}
                 alt="Profile"
                 className="mt-5 mb-2 img-thumbnail"
                 style={{ width: "150px", zIndex: "1" }}

@@ -118,6 +118,7 @@ function NavbarC() {
     <>
       <Navbar variant="dark" expand="lg" className="navbar">
         <Container>
+          
           <Navbar.Brand href="/home" className="brand-logo">
             ProLink
           </Navbar.Brand>
