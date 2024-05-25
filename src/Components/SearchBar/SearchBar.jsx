@@ -121,7 +121,7 @@ const SearchInput = () => {
 
 
 const SearchBar = () => (
-  <AppContainer>
+  <AppContainer className='searchIcon'>
     <SvgSymbol />
     <SearchInput />
   </AppContainer>

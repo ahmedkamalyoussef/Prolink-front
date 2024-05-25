@@ -122,7 +122,7 @@ function NavbarC() {
             ProLink
           </Navbar.Brand>
           <SearchBar />
-          <Nav className="ml-auto d-none d-lg-flex">
+          <Nav className="navIcons ml-auto d-lg-flex">
             <Nav.Link
               onClick={toggleShowFriendRequests}
               className={`nav-icon ${showFriendRequests ? "active" : ""}`}
@@ -219,7 +219,6 @@ function NavbarC() {
           )}
         </Container>
       </Navbar>
-      <div className="pb-5 mb-3"></div>
     </>
   );
 }

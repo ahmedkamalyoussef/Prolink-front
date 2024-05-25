@@ -3,8 +3,11 @@
   padding: 10px 20px;
   background-color: #41c0ff;
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 999;
+  height: 66px;
+  overflow: hidden;
 }
 .dropdown {
   padding-left: 25px;
@@ -40,12 +43,4 @@
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
-}
-@media (max-width: 992px) {
-  .d-none {
-    display: none !important;
-  }
-  .d-lg-flex {
-    display: flex !important;
-  }
 }

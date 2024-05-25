@@ -5,6 +5,7 @@ import PublishPost from '../../Components/PublishPost/PublishPost';
 import { fetchPosts } from '../../Api/Post';
 import LeftSide from '../../Components/Sidebar/Left/LeftSide';
 import RightSide from '../../Components/Sidebar/RightSide/RightSide';
+import "./Home.css"
 
 const profile = {
   image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
@@ -34,9 +35,7 @@ function Home() {
       <LeftSide />
       <Container className="content py-1">
         <PublishPost />
-        <div className="d-flex justify-content-center">
-          <hr className="col-lg-5" />
-        </div>
+          <hr />
         {posts.map((post, index) => (
           <Post key={index} post={post} />
         ))}

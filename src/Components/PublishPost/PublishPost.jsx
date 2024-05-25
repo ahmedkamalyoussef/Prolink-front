@@ -47,15 +47,15 @@ function PublishPost() {
 
   return (
     <>
-      <Row className="justify-content-center mt-4">
-        <Col lg={5} md={8} sm={10}>
+      <div>
+        <div>
           <Card className="publish-post-card" onClick={() => setShowModal(true)}>
-            <Card.Body className="d-flex justify-content-center align-items-center" style={{ cursor: 'pointer' }}>
+            <Card.Body style={{ cursor: 'pointer' }}>
               <span>What's on your mind?</span>
             </Card.Body>
           </Card>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
